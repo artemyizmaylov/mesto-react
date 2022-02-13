@@ -25,14 +25,14 @@ function Main(props) {
         setUserAvatar(res['avatar']);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   useEffect(() => {
     api
       .getCards()
       .then((res) => setCards(res))
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   return (
     <main className="main">
