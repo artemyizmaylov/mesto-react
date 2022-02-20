@@ -2,7 +2,7 @@ function ImagePopup(props) {
   return (
     <div
       className={`popup image-popup
-      ${props.card ? 'popup_opened' : ''}`}
+      ${props.card && 'popup_opened'}`}
     >
       {props.card && (
         <div className="popup__image-container">

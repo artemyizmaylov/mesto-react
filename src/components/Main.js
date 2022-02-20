@@ -1,19 +1,11 @@
-import PopupWithForm from './PopupWithForm.js';
-import ImagePopup from './ImagePopup.js';
-import ConfirmChildren from './ConfirmChildren.js';
-import AvatarChildren from './AvatarChildren.js';
-import PlaceChildren from './PlaceChildren.js';
-import ProfileChildren from './ProfileChildren.js';
 import Card from './Card.js';
-
 import api from '../utils/Api.js';
-
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Main(props) {
-  const [userName, setUserName] = useState();
-  const [userDescription, setUserDescription] = useState();
-  const [userAvatar, setUserAvatar] = useState();
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
@@ -64,45 +56,12 @@ function Main(props) {
         ></button>
       </div>
       <ul className="places">
-        {cards.map((card, i) => (
-          <li className="place" key={i}>
+        {cards.map((card) => (
+          <li className="place" key={card._id}>
             <Card card={card} onCardClick={props.onCardClick} />
           </li>
         ))}
       </ul>
-
-      <PopupWithForm
-        name="profile"
-        title="Редактировать профиль"
-        children={ProfileChildren}
-        isOpen={props.isOpen.profile}
-        onClose={props.onClose}
-      />
-
-      <PopupWithForm
-        name="place"
-        title="Новое место"
-        children={PlaceChildren}
-        isOpen={props.isOpen.place}
-        onClose={props.onClose}
-      />
-
-      <PopupWithForm
-        name="avatar"
-        title="Обновить аватар"
-        children={AvatarChildren}
-        isOpen={props.isOpen.avatar}
-        onClose={props.onClose}
-      />
-
-      <PopupWithForm
-        name="confirm"
-        title="Вы уверены?"
-        children={ConfirmChildren}
-        isOpen={false}
-      />
-
-      <ImagePopup card={props.card} onClose={props.onClose} />
     </main>
   );
 }
