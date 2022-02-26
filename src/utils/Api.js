@@ -41,12 +41,12 @@ class Api {
     return this._fetch(`cards/${cardId}`, 'DELETE');
   }
 
-  likeCard(cardId) {
-    return this._fetch(`cards/${cardId}/likes`, 'PUT');
-  }
-
-  unlikeCard(cardId) {
-    return this._fetch(`cards/${cardId}/likes`, 'DELETE');
+  changeLikeCardStatus(cardId, toLike) {
+    if (toLike) {
+      return this._fetch(`cards/${cardId}/likes`, 'PUT');
+    } else {
+      return this._fetch(`cards/${cardId}/likes`, 'DELETE');
+    }
   }
 }
 
