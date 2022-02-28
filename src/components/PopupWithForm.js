@@ -1,5 +1,6 @@
 function PopupWithForm(props) {
   const { children, name, title, isOpen, onClose } = props;
+
   return (
     <div
       className={`popup ${name}-popup

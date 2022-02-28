@@ -1,10 +1,13 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
+import validate from '../utils/FormValidator';
 
 function AddPlacePopup(props) {
   const { isOpen, onClose, onAddPlace } = props;
+
   const name = useRef();
   const link = useRef();
+  const form = useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -15,7 +18,14 @@ function AddPlacePopup(props) {
     };
 
     onAddPlace(card);
+
+    name.current.value = '';
+    link.current.value = '';
   }
+
+  useEffect(() => {
+    validate(form.current);
+  }, []);
 
   return (
     <PopupWithForm
@@ -25,6 +35,7 @@ function AddPlacePopup(props) {
       onClose={onClose}
     >
       <form
+        ref={form}
         className="popup__form"
         name="place"
         method="post"

@@ -1,9 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { CardsContext } from '../contexts/CardsContext.js';
 
 import Card from './Card.js';
-import api from '../utils/Api.js';
 
 function Main(props) {
   const {

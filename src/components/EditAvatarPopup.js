@@ -1,19 +1,26 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import PopupWithForm from './PopupWithForm';
+import validate from '../utils/FormValidator';
 
 function EditAvatarPopup(props) {
-  const input = useRef();
   const { isOpen, onClose, onUpdateAvatar } = props;
+
+  const link = useRef();
+  const form = useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
 
     onUpdateAvatar({
-      avatar: input.current.value,
+      avatar: link.current.value,
     });
 
-    input.current.value = '';
+    link.current.value = '';
   }
+
+  useEffect(() => {
+    validate(form.current);
+  }, []);
 
   return (
     <PopupWithForm
@@ -23,6 +30,7 @@ function EditAvatarPopup(props) {
       onClose={onClose}
     >
       <form
+        ref={form}
         className="popup__form"
         name="avatar"
         method="post"
@@ -31,7 +39,7 @@ function EditAvatarPopup(props) {
       >
         <label className="popup__input-label" htmlFor="avatar-link">
           <input
-            ref={input}
+            ref={link}
             type="url"
             name="avatar"
             id="avatar-link"
