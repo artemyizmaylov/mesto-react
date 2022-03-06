@@ -1,6 +1,5 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import validate from '../utils/FormValidator';
 
 import PopupWithForm from './PopupWithForm';
 
@@ -12,16 +11,10 @@ function EditProfilePopup(props) {
 
   const currentUser = useContext(CurrentUserContext);
 
-  const form = useRef();
-
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
-
-  useEffect(() => {
-    validate(form.current);
-  }, []);
+  }, [currentUser, isOpen]);
 
   function handleChange(e) {
     if (e.target.name === 'name') {
@@ -48,7 +41,6 @@ function EditProfilePopup(props) {
       onClose={onClose}
     >
       <form
-        ref={form}
         className="popup__form"
         name="profile"
         method="post"

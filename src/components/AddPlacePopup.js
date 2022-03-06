@@ -1,31 +1,35 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
-import validate from '../utils/FormValidator';
 
 function AddPlacePopup(props) {
   const { isOpen, onClose, onAddPlace } = props;
 
-  const name = useRef();
-  const link = useRef();
-  const form = useRef();
+  const [name, setName] = useState('');
+  const [link, setLink] = useState('');
+
+  useEffect(() => {
+    setName('');
+    setLink('');
+  }, [isOpen]);
+
+  function handleChange(e) {
+    if (e.target.name === 'name') {
+      setName(e.target.value);
+    } else if (e.target.name === 'link') {
+      setLink(e.target.value);
+    }
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
     const card = {
-      name: name.current.value,
-      link: link.current.value,
+      name,
+      link,
     };
 
     onAddPlace(card);
-
-    name.current.value = '';
-    link.current.value = '';
   }
-
-  useEffect(() => {
-    validate(form.current);
-  }, []);
 
   return (
     <PopupWithForm
@@ -35,7 +39,6 @@ function AddPlacePopup(props) {
       onClose={onClose}
     >
       <form
-        ref={form}
         className="popup__form"
         name="place"
         method="post"
@@ -44,7 +47,8 @@ function AddPlacePopup(props) {
       >
         <label className="popup__input-label" htmlFor="place-name">
           <input
-            ref={name}
+            value={name || ''}
+            onChange={handleChange}
             type="text"
             name="name"
             id="place-name"
@@ -58,7 +62,8 @@ function AddPlacePopup(props) {
         </label>
         <label className="popup__input-label" htmlFor="place-link">
           <input
-            ref={link}
+            value={link || ''}
+            onChange={handleChange}
             type="url"
             name="link"
             id="place-link"

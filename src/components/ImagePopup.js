@@ -1,24 +1,20 @@
 function ImagePopup(props) {
+  const { card, onClose } = props;
+
   return (
     <div
       className={`popup image-popup
-      ${props.card && 'popup_opened'}`}
+      ${card && 'popup_opened'}`}
     >
-      {props.card && (
+      {card && (
         <div className="popup__image-container">
           <button
             className="button popup__close-button"
             type="button"
-            onClick={props.onClose}
+            onClick={onClose}
           ></button>
-          <img
-            src={props.card.link}
-            alt={props.card.name}
-            className="popup__img"
-          />
-          <h2 className="popup__heading popup__image-name">
-            {props.card.name}
-          </h2>
+          <img src={card.link} alt={card.name} className="popup__img" />
+          <h2 className="popup__heading popup__image-name">{card.name}</h2>
         </div>
       )}
     </div>
