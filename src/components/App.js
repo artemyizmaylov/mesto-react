@@ -61,8 +61,8 @@ function App() {
 
   function handleCardDelete(card) {
     api.deleteCard(card._id).then(() => {
-      closeAllPopups();
       setCards((state) => state.filter((c) => c._id !== card._id));
+      closeAllPopups();
     });
   }
 
@@ -115,11 +115,11 @@ function App() {
       <div className="page">
         <Header />
         <Main
+          cards={cards}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleConfirmDelete}
         />

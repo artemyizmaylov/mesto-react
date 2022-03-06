@@ -5,11 +5,11 @@ import Card from './Card.js';
 
 function Main(props) {
   const {
+    cards,
     onEditAvatar,
     onEditProfile,
     onAddPlace,
     onCardClick,
-    cards,
     onCardDelete,
     onCardLike,
   } = props;
