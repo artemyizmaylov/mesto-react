@@ -43,6 +43,13 @@ function App() {
     setCardForDelete(card);
   }
 
+  function handleEscClose(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeAllPopups();
+    }
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -108,6 +115,11 @@ function App() {
       .getCards()
       .then((cards) => setCards(cards))
       .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscClose);
+    return () => document.removeEventListener('keydown', handleEscClose);
   }, []);
 
   return (
