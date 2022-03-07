@@ -1,7 +1,16 @@
+import { useEffect, useState } from 'react';
+
 function ConfirmPopup(props) {
   const { card, onClose, onCardDelete } = props;
+  const [buttonText, setButtonText] = useState('Да');
+
+  useEffect(() => {
+    setButtonText('Да');
+  }, [card]);
 
   function handleConfirm() {
+    setButtonText('Удаление...');
+
     onCardDelete(card);
   }
 
@@ -22,7 +31,7 @@ function ConfirmPopup(props) {
           type="button"
           onClick={handleConfirm}
         >
-          Да
+          {buttonText}
         </button>
       </div>
     </div>

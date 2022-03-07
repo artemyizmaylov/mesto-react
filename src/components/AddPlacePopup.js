@@ -6,29 +6,57 @@ function AddPlacePopup(props) {
 
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+  const [buttonText, setButtonText] = useState('Создать');
+
+  const [nameValidationMessage, setNameValidationMessage] = useState('');
+  const [linkValidationMessage, setLinkValidationMessage] = useState('');
+
+  const [nameValid, setNameValid] = useState(false);
+  const [linkValid, setLinkValid] = useState(false);
+  const [formValid, setFormValid] = useState(false);
 
   useEffect(() => {
     setName('');
     setLink('');
+    setNameValid(false);
+    setLinkValid(false);
+    setFormValid(false);
+    setNameValidationMessage('');
+    setLinkValidationMessage('');
+    setButtonText('Создать');
   }, [isOpen]);
 
+  useEffect(() => {
+    if (nameValid && linkValid) {
+      setFormValid(true);
+    } else {
+      setFormValid(false);
+    }
+  }, [nameValid, linkValid]);
+
   function handleChange(e) {
-    if (e.target.name === 'name') {
-      setName(e.target.value);
-    } else if (e.target.name === 'link') {
-      setLink(e.target.value);
+    switch (e.target.name) {
+      case 'name':
+        setName(e.target.value);
+        setNameValidationMessage(e.target.validationMessage);
+        setNameValid(e.target.validity.valid);
+        break;
+      case 'link':
+        setLink(e.target.value);
+        setLinkValidationMessage(e.target.validationMessage);
+        setLinkValid(e.target.validity.valid);
     }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    const card = {
+    setButtonText('Создание...');
+
+    onAddPlace({
       name,
       link,
-    };
-
-    onAddPlace(card);
+    });
   }
 
   return (
@@ -58,7 +86,7 @@ function AddPlacePopup(props) {
             maxLength="30"
             required
           />
-          <span className="popup__input-error place-name-error"></span>
+          <span className="popup__input-error">{nameValidationMessage}</span>
         </label>
         <label className="popup__input-label" htmlFor="place-link">
           <input
@@ -71,13 +99,16 @@ function AddPlacePopup(props) {
             placeholder="Ссылка на картинку"
             required
           />
-          <span className="popup__input-error place-link-error"></span>
+          <span className="popup__input-error">{linkValidationMessage}</span>
         </label>
         <button
-          className="button popup__confirm-button popup__confirm-button"
+          className={`button popup__confirm-button ${
+            formValid ? '' : 'popup__confirm-button_disabled'
+          }`}
           type="submit"
+          disabled={!formValid}
         >
-          Создать
+          {buttonText}
         </button>
       </form>
     </PopupWithForm>
